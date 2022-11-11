@@ -1,7 +1,7 @@
-package com.musala.dronesservice.entrypoint.converter.droneregister;
+package com.musala.dronesservice.entrypoint.converter;
 
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterRequestModel;
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterRequestModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.entrypoint.payload.request.DroneRegisterRequest;
 import com.musala.dronesservice.entrypoint.payload.response.DroneRegisterResponse;
 import lombok.AccessLevel;

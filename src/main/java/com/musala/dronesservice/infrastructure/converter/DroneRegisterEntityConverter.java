@@ -1,7 +1,7 @@
 package com.musala.dronesservice.infrastructure.converter;
 
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterRequestModel;
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterRequestModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.infrastructure.entity.DroneEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

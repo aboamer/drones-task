@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DroneRegisterResponse {
+public class DroneMedicationLoadResponse {
 
     private String result;
     private String serialNumber;

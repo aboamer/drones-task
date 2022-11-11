@@ -16,7 +16,7 @@ public class DroneMedicationLoadEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "source", columnDefinition = "VARCHAR(30) NOT NULL")
@@ -24,9 +24,6 @@ public class DroneMedicationLoadEntity {
 
     @Column(name = "destination", columnDefinition = "VARCHAR(30) NOT NULL")
     private String destination;
-
-    @Column(name = "created_on", columnDefinition = "VARCHAR(30) NOT NULL")
-    private LocalDateTime createdOn;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_serial_no", referencedColumnName = "serial_no")

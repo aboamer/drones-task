@@ -1,4 +1,4 @@
-package com.musala.dronesservice.core.droneregister.domain;
+package com.musala.dronesservice.core.domain.droneregister;
 
 import lombok.Data;
 

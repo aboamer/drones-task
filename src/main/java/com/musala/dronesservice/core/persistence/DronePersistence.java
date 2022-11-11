@@ -1,9 +1,9 @@
 package com.musala.dronesservice.core.persistence;
 
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterRequestModel;
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterResponseModel;
-
-import java.util.Optional;
+import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRequestModel;
+import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterRequestModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 
 public interface DronePersistence {
 
@@ -13,4 +13,6 @@ public interface DronePersistence {
      * @return
      */
     DroneRegisterResponseModel register(DroneRegisterRequestModel droneRegisterRequestModel);
+
+    DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel);
 }

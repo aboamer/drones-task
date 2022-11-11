@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
@@ -12,11 +13,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "drone")
-public class DroneEntity {
+public class DroneEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "serial_no", columnDefinition = "VARCHAR(16) NOT NULL")

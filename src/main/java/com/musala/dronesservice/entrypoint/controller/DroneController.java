@@ -1,12 +1,15 @@
 package com.musala.dronesservice.entrypoint.controller;
 
-import com.musala.dronesservice.core.droneregister.domain.DroneRegisterResponseModel;
+import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.core.service.DroneService;
-import com.musala.dronesservice.entrypoint.converter.droneregister.DroneRegisterConverter;
+import com.musala.dronesservice.entrypoint.converter.DroneMedicationLoadConverter;
+import com.musala.dronesservice.entrypoint.converter.DroneRegisterConverter;
+import com.musala.dronesservice.entrypoint.payload.request.DroneMedicationLoadRequest;
 import com.musala.dronesservice.entrypoint.payload.request.DroneRegisterRequest;
+import com.musala.dronesservice.entrypoint.payload.response.DroneMedicationLoadResponse;
 import com.musala.dronesservice.entrypoint.payload.response.DroneRegisterResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -34,5 +37,15 @@ public class DroneController {
         DroneRegisterResponseModel newDroneModel = droneService.register(DroneRegisterConverter.toModel(droneRequest));
 
         return new ResponseEntity<>(DroneRegisterConverter.toResponse(newDroneModel), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/load", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<DroneMedicationLoadResponse> loadDrone(
+            @Valid @NotNull @RequestBody DroneMedicationLoadRequest droneMedicationLoadRequest
+    ) {
+
+        final DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = droneService.load(DroneMedicationLoadConverter.toModel(droneMedicationLoadRequest));
+
+        return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.CREATED);
     }
 }
