@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class MedicationRequestModel {
+public class MedicationModel {
 
     private String code;
     private String name;

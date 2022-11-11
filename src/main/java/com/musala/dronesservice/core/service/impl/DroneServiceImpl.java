@@ -26,4 +26,10 @@ public class DroneServiceImpl implements DroneService {
 
         return dronePersistence.load(droneMedicationLoadRequestModel);
     }
+
+    @Override
+    public DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber) {
+
+        return dronePersistence.checkLoadedMedicationsForDrone(serialNumber);
+    }
 }

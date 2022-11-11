@@ -14,5 +14,17 @@ public interface DroneService {
      */
     DroneRegisterResponseModel register(DroneRegisterRequestModel droneRegisterRequestModel);
 
+    /**
+     *
+     * @param droneMedicationLoadRequestModel
+     * @return
+     */
     DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel);
+
+    /**
+     *
+     * @param serialNumber
+     * @return
+     */
+    DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber);
 }

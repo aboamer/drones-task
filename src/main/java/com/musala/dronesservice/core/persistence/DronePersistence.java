@@ -15,4 +15,6 @@ public interface DronePersistence {
     DroneRegisterResponseModel register(DroneRegisterRequestModel droneRegisterRequestModel);
 
     DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel);
+
+    DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber);
 }

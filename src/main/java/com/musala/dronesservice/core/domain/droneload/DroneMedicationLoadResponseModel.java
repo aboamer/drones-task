@@ -8,4 +8,5 @@ public class DroneMedicationLoadResponseModel {
     private String result;
     private String serialNumber;
     private String message;
+    private MedicationModel medicationModel;
 }

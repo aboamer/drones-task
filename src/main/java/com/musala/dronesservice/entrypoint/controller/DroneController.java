@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -47,5 +44,13 @@ public class DroneController {
         final DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = droneService.load(DroneMedicationLoadConverter.toModel(droneMedicationLoadRequest));
 
         return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "details/{serialNumber}", produces = "application/json")
+    public ResponseEntity<DroneMedicationLoadResponse> checkLoadedMedicationItem(@PathVariable("serialNumber") String serialNumber) {
+
+        final DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = droneService.checkLoadedMedicationsForDrone(serialNumber);
+
+        return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.OK);
     }
 }

@@ -38,7 +38,7 @@ public class DronePersistenceImpl implements DronePersistence {
     public DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel) {
 
         DroneMedicationLoadEntity existingDroneMedicationLoad = droneMedicationLoadRepository.findByCode(
-                droneMedicationLoadRequestModel.getMedicationRequestModel().getCode());
+                droneMedicationLoadRequestModel.getMedicationModel().getCode());
 
         if (existingDroneMedicationLoad != null) {
 
@@ -47,7 +47,7 @@ public class DronePersistenceImpl implements DronePersistence {
 
         final DroneMedicationLoadEntity droneMedicationLoadEntity = DroneMedicationLoadEntityConverter.toEntity(droneMedicationLoadRequestModel);
 
-        final MedicationEntity medicationEntity = medicationRepository.save(MedicationEntityConverter.toEntity(droneMedicationLoadRequestModel.getMedicationRequestModel()));
+        final MedicationEntity medicationEntity = medicationRepository.save(MedicationEntityConverter.toEntity(droneMedicationLoadRequestModel.getMedicationModel()));
 
         final DroneEntity droneEntity = droneRepository.findBySerialNumber(droneMedicationLoadRequestModel.getSerialNumber());
 
@@ -73,5 +73,11 @@ public class DronePersistenceImpl implements DronePersistence {
         droneMedicationLoadEntity.setDroneEntity(droneEntity);
 
         return DroneMedicationLoadEntityConverter.toResponseModel(droneMedicationLoadRepository.save(droneMedicationLoadEntity));
+    }
+
+    @Override
+    public DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber) {
+
+        return DroneMedicationLoadEntityConverter.toResponseModel(droneMedicationLoadRepository.findByDrone(serialNumber));
     }
 }

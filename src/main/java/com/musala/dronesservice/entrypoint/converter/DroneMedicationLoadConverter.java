@@ -2,7 +2,7 @@ package com.musala.dronesservice.entrypoint.converter;
 
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRequestModel;
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
-import com.musala.dronesservice.core.domain.droneload.MedicationRequestModel;
+import com.musala.dronesservice.core.domain.droneload.MedicationModel;
 import com.musala.dronesservice.entrypoint.payload.request.DroneMedicationLoadRequest;
 import com.musala.dronesservice.entrypoint.payload.request.MedicationRequest;
 import com.musala.dronesservice.entrypoint.payload.response.DroneMedicationLoadResponse;
@@ -18,13 +18,13 @@ public final class DroneMedicationLoadConverter {
                 .serialNumber(droneMedicationLoadRequest.getSerialNumber())
                 .source(droneMedicationLoadRequest.getSource())
                 .destination(droneMedicationLoadRequest.getDestination())
-                .medicationRequestModel(toMedicationRequestModel(droneMedicationLoadRequest.getMedicationRequest()))
+                .medicationModel(toMedicationRequestModel(droneMedicationLoadRequest.getMedicationRequest()))
                 .build();
     }
 
-    private static MedicationRequestModel toMedicationRequestModel(MedicationRequest medicationRequest) {
+    private static MedicationModel toMedicationRequestModel(MedicationRequest medicationRequest) {
 
-        return MedicationRequestModel.builder()
+        return MedicationModel.builder()
                 .code(medicationRequest.getCode())
                 .image(medicationRequest.getImage())
                 .name(medicationRequest.getName())
@@ -38,6 +38,7 @@ public final class DroneMedicationLoadConverter {
                 .serialNumber(droneMedicationLoadResponseModel.getSerialNumber())
                 .message(droneMedicationLoadResponseModel.getMessage())
                 .result(droneMedicationLoadResponseModel.getResult())
+                .medicationModel(droneMedicationLoadResponseModel.getMedicationModel())
                 .build();
     }
 }

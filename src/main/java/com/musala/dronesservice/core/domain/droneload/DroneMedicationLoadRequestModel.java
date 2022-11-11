@@ -10,5 +10,5 @@ public class DroneMedicationLoadRequestModel {
     private String serialNumber;
     private String source;
     private String destination;
-    private MedicationRequestModel medicationRequestModel;
+    private MedicationModel medicationModel;
 }
