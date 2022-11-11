@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "drone_medication_load")
-public class DroneMedicationLoad {
+public class DroneMedicationLoadEntity {
 
     @Id
     @Column(name = "id")
@@ -30,9 +30,9 @@ public class DroneMedicationLoad {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_serial_no", referencedColumnName = "serial_no")
-    private Drone drone;
+    private DroneEntity droneEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_code", referencedColumnName = "code", unique = true)
-    private Medication medication;
+    private MedicationEntity medicationEntity;
 }

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "drone")
-public class Drone {
+public class DroneEntity {
 
     @Id
     @Column(name = "id")

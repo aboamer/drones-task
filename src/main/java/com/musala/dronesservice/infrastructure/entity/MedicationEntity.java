@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "medication")
-public class Medication {
+public class MedicationEntity {
 
     @Id
     @Column(name = "id")
