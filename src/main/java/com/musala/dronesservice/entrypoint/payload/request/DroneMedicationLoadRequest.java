@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -25,5 +26,6 @@ public class DroneMedicationLoadRequest {
     private String destination;
 
     @NotNull
+    @Valid
     private MedicationRequest medicationRequest;
 }

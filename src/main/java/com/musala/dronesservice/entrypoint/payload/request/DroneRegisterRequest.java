@@ -29,7 +29,7 @@ public class DroneRegisterRequest {
     private String model;
 
     @NotNull
-    @Max(value = 500, message = "weightLimit value cannot exceed 500")
+    @Max(value = 500, message = "value cannot exceed 500")
     private double weightLimit;
 
     @NotNull

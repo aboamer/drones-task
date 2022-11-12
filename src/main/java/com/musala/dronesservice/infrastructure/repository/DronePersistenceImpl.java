@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,44 +36,26 @@ public class DronePersistenceImpl implements DronePersistence {
     }
 
     @Override
-    public DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel) {
-
-        DroneMedicationLoadEntity existingDroneMedicationLoad = droneMedicationLoadRepository.findByCode(
-                droneMedicationLoadRequestModel.getMedicationModel().getCode());
-
-        if (existingDroneMedicationLoad != null) {
-
-            throw new RuntimeException("Medication code has aready been loaded, try another one");
-        }
+    public DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel, DroneModel droneModel) {
 
         final DroneMedicationLoadEntity droneMedicationLoadEntity = DroneMedicationLoadEntityConverter.toEntity(droneMedicationLoadRequestModel);
 
         final MedicationEntity medicationEntity = medicationRepository.save(MedicationEntityConverter.toEntity(droneMedicationLoadRequestModel.getMedicationModel()));
 
-        final DroneEntity droneEntity = droneRepository.findBySerialNumber(droneMedicationLoadRequestModel.getSerialNumber());
-
-        if (droneEntity == null) {
-
-            throw new RuntimeException("Drone specified does not exist");
-        }
-
-        if (droneEntity.getWeightLimit() < medicationEntity.getWeight()) {
-
-            throw new RuntimeException("The Drone cannot load more than the weight limit");
-        }
-
-        if (droneEntity.getBattery().compareTo(new BigDecimal("0.25")) < 0) {
-
-            throw new RuntimeException("The Drone cannot be loaded, battery below 25%");
-        }
-
         droneRepository.updateDroneStatus("LOADING", droneMedicationLoadRequestModel.getSerialNumber());
 
         droneMedicationLoadEntity.setMedicationEntity(medicationEntity);
 
-        droneMedicationLoadEntity.setDroneEntity(droneEntity);
+        droneMedicationLoadEntity.setDroneEntity(droneRepository.findBySerialNumber(droneModel.getSerialNumber()));
 
         return DroneMedicationLoadEntityConverter.toResponseModel(droneMedicationLoadRepository.save(droneMedicationLoadEntity));
+    }
+
+    public DroneMedicationLoadResponseModel getDroneMedicationLoadEntity(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel) {
+
+        return DroneMedicationLoadEntityConverter.toResponseModel(
+                droneMedicationLoadRepository.findByCode(droneMedicationLoadRequestModel.getMedicationModel().getCode())
+        );
     }
 
     @Override
@@ -87,14 +68,6 @@ public class DronePersistenceImpl implements DronePersistence {
     public List<DroneModel> getAvailableDroneForLoading() {
 
         return droneRepository.findAllByState("IDLE").stream().map(DroneEntityConverter::toDroneResponseModel).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getBatteryLevel(String serialNumber) {
-
-        DroneEntity droneEntity = droneRepository.findBySerialNumber(serialNumber);
-
-        return droneEntity != null ? "Battery Level: " + droneEntity.getBattery().toString() : "No drone found with this serial number";
     }
 
     @Override

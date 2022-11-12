@@ -5,11 +5,15 @@ import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRespons
 import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.core.exceptions.DomainExistException;
+import com.musala.dronesservice.core.exceptions.DomainNotExistException;
+import com.musala.dronesservice.core.exceptions.DroneValidationException;
 import com.musala.dronesservice.core.persistence.DronePersistence;
 import com.musala.dronesservice.core.service.DroneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +26,7 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public DroneRegisterResponseModel register(DroneModel droneModel) {
 
-        if(Objects.nonNull(dronePersistence.getDroneBySerialNumber(droneModel.getSerialNumber())))
+        if (Objects.nonNull(dronePersistence.getDroneBySerialNumber(droneModel.getSerialNumber())))
             throw new DomainExistException(String.format("Drone already exists with serial number %s", droneModel.getSerialNumber()));
 
         return dronePersistence.register(droneModel);
@@ -31,7 +35,31 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel) {
 
-        return dronePersistence.load(droneMedicationLoadRequestModel);
+        DroneMedicationLoadResponseModel existingDroneMedicationLoad = dronePersistence.getDroneMedicationLoadEntity(droneMedicationLoadRequestModel);
+
+        if (Objects.nonNull(existingDroneMedicationLoad.getMedicationModel())) {
+
+            throw new DroneValidationException("Medication code has already been loaded, try another one");
+        }
+
+        final DroneModel droneModel = dronePersistence.getDroneBySerialNumber(droneMedicationLoadRequestModel.getSerialNumber());
+
+        if (droneModel == null) {
+
+            throw new DomainNotExistException("Drone specified does not exist");
+        }
+
+        if (droneModel.getWeightLimit() < droneMedicationLoadRequestModel.getMedicationModel().getWeight()) {
+
+            throw new DroneValidationException("The Drone cannot load more than the weight limit");
+        }
+
+        if (droneModel.getBattery().compareTo(new BigDecimal("0.25")) < 0) {
+
+            throw new DroneValidationException("The Drone cannot be loaded as battery is below 25%");
+        }
+
+        return dronePersistence.load(droneMedicationLoadRequestModel, droneModel);
     }
 
     @Override
@@ -49,6 +77,10 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public String getBatteryLevel(String serialNumber) {
 
-        return dronePersistence.getBatteryLevel(serialNumber);
+        DroneModel droneModel = dronePersistence.getDroneBySerialNumber(serialNumber);
+
+        DecimalFormat decFormat = new DecimalFormat("#%");
+
+        return Objects.isNull(droneModel) ? "No drone found with this serial number" : decFormat.format(droneModel.getBattery());
     }
 }

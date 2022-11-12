@@ -16,13 +16,13 @@ public interface DronePersistence {
      */
     DroneRegisterResponseModel register(DroneModel droneModel);
 
-    DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel);
+    DroneMedicationLoadResponseModel load(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel, DroneModel droneModel);
+
+    DroneMedicationLoadResponseModel getDroneMedicationLoadEntity(DroneMedicationLoadRequestModel droneMedicationLoadRequestModel);
 
     DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber);
 
     List<DroneModel> getAvailableDroneForLoading();
-
-    String getBatteryLevel(String serialNumber);
 
     DroneModel getDroneBySerialNumber(String serialNumber);
 

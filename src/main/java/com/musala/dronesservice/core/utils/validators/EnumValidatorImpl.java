@@ -14,7 +14,7 @@ public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, Str
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        if(!valueList.contains(value.toUpperCase()))
+        if(value == null || !valueList.contains(value.toUpperCase()))
             throw new DomainNotExistException("value not supported");
 
         return valueList.contains(value.toUpperCase());
