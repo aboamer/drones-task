@@ -102,4 +102,10 @@ public class DronePersistenceImpl implements DronePersistence {
 
         return DroneEntityConverter.toDroneResponseModel(droneRepository.findBySerialNumber(serialNumber));
     }
+
+    @Override
+    public List<DroneModel> getDrones() {
+
+        return droneRepository.findAll().stream().map(DroneEntityConverter::toDroneResponseModel).collect(Collectors.toList());
+    }
 }

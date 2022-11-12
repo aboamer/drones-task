@@ -25,4 +25,6 @@ public interface DronePersistence {
     String getBatteryLevel(String serialNumber);
 
     DroneModel getDroneBySerialNumber(String serialNumber);
+
+    List<DroneModel> getDrones();
 }
