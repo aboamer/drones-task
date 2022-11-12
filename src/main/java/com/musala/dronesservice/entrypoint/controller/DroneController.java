@@ -1,6 +1,7 @@
 package com.musala.dronesservice.entrypoint.controller;
 
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.core.service.DroneService;
 import com.musala.dronesservice.entrypoint.converter.DroneMedicationLoadConverter;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/drone")
@@ -52,5 +54,11 @@ public class DroneController {
         final DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = droneService.checkLoadedMedicationsForDrone(serialNumber);
 
         return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.OK);
+    }
+
+    @GetMapping(path= "/available", produces = "application/json")
+    public ResponseEntity<List<DroneModel>> getAvailableDroneForLoading() {
+
+        return new ResponseEntity<>(droneService.getAvailableDroneForLoading(), HttpStatus.OK);
     }
 }

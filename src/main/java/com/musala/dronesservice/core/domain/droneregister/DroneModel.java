@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-public final class DroneRegisterRequestModel {
+public final class DroneModel {
 
     private String serialNumber;
     private String model;

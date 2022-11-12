@@ -1,6 +1,6 @@
 package com.musala.dronesservice.entrypoint.converter;
 
-import com.musala.dronesservice.core.domain.droneregister.DroneRegisterRequestModel;
+import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.entrypoint.payload.request.DroneRegisterRequest;
 import com.musala.dronesservice.entrypoint.payload.response.DroneRegisterResponse;
@@ -10,9 +10,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DroneRegisterConverter {
 
-    public static DroneRegisterRequestModel toModel(final DroneRegisterRequest droneRegisterRequest) {
+    public static DroneModel toModel(final DroneRegisterRequest droneRegisterRequest) {
 
-        return DroneRegisterRequestModel.builder()
+        return DroneModel.builder()
                 .serialNumber(droneRegisterRequest.getSerialNumber())
                 .weightLimit(droneRegisterRequest.getWeightLimit())
                 .model(droneRegisterRequest.getModel())

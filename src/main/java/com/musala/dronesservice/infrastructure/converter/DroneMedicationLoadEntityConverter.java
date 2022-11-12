@@ -8,6 +8,8 @@ import com.musala.dronesservice.infrastructure.entity.MedicationEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+import java.util.Objects;
+
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DroneMedicationLoadEntityConverter {
 
@@ -24,6 +26,14 @@ public class DroneMedicationLoadEntityConverter {
     public static DroneMedicationLoadResponseModel toResponseModel(final DroneMedicationLoadEntity droneMedicationLoadEntity) {
 
         DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = new DroneMedicationLoadResponseModel();
+
+        if(Objects.isNull(droneMedicationLoadEntity)) {
+
+            droneMedicationLoadResponseModel.setResult("NONE");
+            droneMedicationLoadResponseModel.setMessage("No medications loaded for this drone");
+
+            return droneMedicationLoadResponseModel;
+        }
 
         droneMedicationLoadResponseModel.setSerialNumber(droneMedicationLoadEntity.getDroneEntity().getSerialNumber());
         droneMedicationLoadResponseModel.setResult("SUCCESS");
