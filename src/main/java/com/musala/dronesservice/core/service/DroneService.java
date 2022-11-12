@@ -31,4 +31,6 @@ public interface DroneService {
     DroneMedicationLoadResponseModel checkLoadedMedicationsForDrone(String serialNumber);
 
     List<DroneModel> getAvailableDroneForLoading();
+
+    String getBatteryLevel(String serialNumber);
 }

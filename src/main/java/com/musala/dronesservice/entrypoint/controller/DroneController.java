@@ -48,7 +48,7 @@ public class DroneController {
         return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "details/{serialNumber}", produces = "application/json")
+    @GetMapping(path = "{serialNumber}/details", produces = "application/json")
     public ResponseEntity<DroneMedicationLoadResponse> checkLoadedMedicationItem(@PathVariable("serialNumber") String serialNumber) {
 
         final DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = droneService.checkLoadedMedicationsForDrone(serialNumber);
@@ -60,5 +60,11 @@ public class DroneController {
     public ResponseEntity<List<DroneModel>> getAvailableDroneForLoading() {
 
         return new ResponseEntity<>(droneService.getAvailableDroneForLoading(), HttpStatus.OK);
+    }
+
+    @GetMapping(path ="{serialNumber}/battery", produces = "application/json")
+    public ResponseEntity<String> checkDroneBatteryLevel(@PathVariable("serialNumber") String serialNumber) {
+
+        return new ResponseEntity<>(droneService.getBatteryLevel(serialNumber), HttpStatus.OK);
     }
 }

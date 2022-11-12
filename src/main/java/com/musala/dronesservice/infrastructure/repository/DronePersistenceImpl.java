@@ -88,4 +88,12 @@ public class DronePersistenceImpl implements DronePersistence {
 
         return droneRepository.findAllByState("IDLE").stream().map(DroneEntityConverter::toDroneResponseModel).collect(Collectors.toList());
     }
+
+    @Override
+    public String getBatteryLevel(String serialNumber) {
+
+        DroneEntity droneEntity = droneRepository.findBySerialNumber(serialNumber);
+
+        return droneEntity != null ? "Battery Level: " + droneEntity.getBattery().toString() : "No drone found with this serial number";
+    }
 }

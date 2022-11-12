@@ -40,4 +40,10 @@ public class DroneServiceImpl implements DroneService {
 
         return dronePersistence.getAvailableDroneForLoading();
     }
+
+    @Override
+    public String getBatteryLevel(String serialNumber) {
+
+        return dronePersistence.getBatteryLevel(serialNumber);
+    }
 }
