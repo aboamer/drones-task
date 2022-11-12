@@ -6,6 +6,8 @@ import com.musala.dronesservice.infrastructure.entity.DroneEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+import java.util.Objects;
+
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DroneEntityConverter {
 
@@ -34,6 +36,11 @@ public final class DroneEntityConverter {
     }
 
     public static DroneModel toDroneResponseModel(final DroneEntity droneEntity) {
+
+        return Objects.isNull(droneEntity) ? null : getDroneModel(droneEntity);
+    }
+
+    private static DroneModel getDroneModel(DroneEntity droneEntity) {
 
         return DroneModel.builder()
                 .model(droneEntity.getModel())

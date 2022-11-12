@@ -5,8 +5,8 @@ import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRespons
 import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
 import com.musala.dronesservice.core.persistence.DronePersistence;
-import com.musala.dronesservice.infrastructure.converter.DroneMedicationLoadEntityConverter;
 import com.musala.dronesservice.infrastructure.converter.DroneEntityConverter;
+import com.musala.dronesservice.infrastructure.converter.DroneMedicationLoadEntityConverter;
 import com.musala.dronesservice.infrastructure.converter.MedicationEntityConverter;
 import com.musala.dronesservice.infrastructure.entity.DroneEntity;
 import com.musala.dronesservice.infrastructure.entity.DroneMedicationLoadEntity;
@@ -95,5 +95,11 @@ public class DronePersistenceImpl implements DronePersistence {
         DroneEntity droneEntity = droneRepository.findBySerialNumber(serialNumber);
 
         return droneEntity != null ? "Battery Level: " + droneEntity.getBattery().toString() : "No drone found with this serial number";
+    }
+
+    @Override
+    public DroneModel getDroneBySerialNumber(String serialNumber) {
+
+        return DroneEntityConverter.toDroneResponseModel(droneRepository.findBySerialNumber(serialNumber));
     }
 }
