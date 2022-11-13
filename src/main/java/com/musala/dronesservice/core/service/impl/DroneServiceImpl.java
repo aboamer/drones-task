@@ -9,6 +9,7 @@ import com.musala.dronesservice.core.exceptions.DomainNotExistException;
 import com.musala.dronesservice.core.exceptions.DroneValidationException;
 import com.musala.dronesservice.core.persistence.DronePersistence;
 import com.musala.dronesservice.core.service.DroneService;
+import com.musala.dronesservice.core.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,6 @@ public class DroneServiceImpl implements DroneService {
 
         DecimalFormat decFormat = new DecimalFormat("#%");
 
-        return Objects.isNull(droneModel) ? "No drone found with this serial number" : decFormat.format(droneModel.getBattery());
+        return Objects.isNull(droneModel) ? Constants.NO_DRONE_FOUND : decFormat.format(droneModel.getBattery());
     }
 }

@@ -2,6 +2,7 @@ package com.musala.dronesservice.infrastructure.converter;
 
 import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
+import com.musala.dronesservice.core.utils.Constants;
 import com.musala.dronesservice.infrastructure.entity.DroneEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,8 +30,8 @@ public final class DroneEntityConverter {
         DroneRegisterResponseModel droneRegisterResponseModel = new DroneRegisterResponseModel();
 
         droneRegisterResponseModel.setSerialNumber(droneEntity.getSerialNumber());
-        droneRegisterResponseModel.setResult("SUCCESS");
-        droneRegisterResponseModel.setMessage("New Drone created successfully");
+        droneRegisterResponseModel.setResult(Constants.SUCCESS);
+        droneRegisterResponseModel.setMessage(Constants.NEW_DRONE_CREATED_SUCCESSFULLY);
 
         return droneRegisterResponseModel;
     }

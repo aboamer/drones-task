@@ -10,6 +10,7 @@ import com.musala.dronesservice.entrypoint.payload.request.DroneMedicationLoadRe
 import com.musala.dronesservice.entrypoint.payload.request.DroneRegisterRequest;
 import com.musala.dronesservice.entrypoint.payload.response.DroneMedicationLoadResponse;
 import com.musala.dronesservice.entrypoint.payload.response.DroneRegisterResponse;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class DroneController {
 
     private final DroneService droneService;
 
+    @ApiOperation(value = "register drone inside database")
     @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<DroneRegisterResponse> registerDrone(
             @Valid @NotNull @RequestBody DroneRegisterRequest droneRequest
@@ -38,6 +40,7 @@ public class DroneController {
         return new ResponseEntity<>(DroneRegisterConverter.toResponse(newDroneModel), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "load drone with a given medication")
     @PostMapping(path = "/load", consumes = "application/json", produces = "application/json")
     public ResponseEntity<DroneMedicationLoadResponse> loadDrone(
             @Valid @NotNull @RequestBody DroneMedicationLoadRequest droneMedicationLoadRequest
@@ -48,6 +51,7 @@ public class DroneController {
         return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "getting medication load for a given drone serial number")
     @GetMapping(path = "{serialNumber}/details", produces = "application/json")
     public ResponseEntity<DroneMedicationLoadResponse> checkLoadedMedicationItem(@PathVariable("serialNumber") String serialNumber) {
 
@@ -56,12 +60,14 @@ public class DroneController {
         return new ResponseEntity<>(DroneMedicationLoadConverter.toResponse(droneMedicationLoadResponseModel), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "getting available drone for loading")
     @GetMapping(path= "/available", produces = "application/json")
     public ResponseEntity<List<DroneModel>> getAvailableDroneForLoading() {
 
         return new ResponseEntity<>(droneService.getAvailableDroneForLoading(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "getting battery level for a given drone serial number")
     @GetMapping(path ="{serialNumber}/battery", produces = "application/json")
     public ResponseEntity<String> checkDroneBatteryLevel(@PathVariable("serialNumber") String serialNumber) {
 

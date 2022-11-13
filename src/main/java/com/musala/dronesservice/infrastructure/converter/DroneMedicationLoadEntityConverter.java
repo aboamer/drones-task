@@ -3,6 +3,7 @@ package com.musala.dronesservice.infrastructure.converter;
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRequestModel;
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
 import com.musala.dronesservice.core.domain.droneload.MedicationModel;
+import com.musala.dronesservice.core.utils.Constants;
 import com.musala.dronesservice.infrastructure.entity.DroneMedicationLoadEntity;
 import com.musala.dronesservice.infrastructure.entity.MedicationEntity;
 import lombok.AccessLevel;
@@ -25,22 +26,17 @@ public class DroneMedicationLoadEntityConverter {
 
     public static DroneMedicationLoadResponseModel toResponseModel(final DroneMedicationLoadEntity droneMedicationLoadEntity) {
 
-        DroneMedicationLoadResponseModel droneMedicationLoadResponseModel = new DroneMedicationLoadResponseModel();
+        if (Objects.isNull(droneMedicationLoadEntity)) {
 
-        if(Objects.isNull(droneMedicationLoadEntity)) {
-
-            droneMedicationLoadResponseModel.setResult("NONE");
-            droneMedicationLoadResponseModel.setMessage("No medications loaded for this drone");
-
-            return droneMedicationLoadResponseModel;
+            return DroneMedicationLoadResponseModel.builder().result(Constants.NONE).message(Constants.NO_MEDICATION_LOADED).build();
         }
 
-        droneMedicationLoadResponseModel.setSerialNumber(droneMedicationLoadEntity.getDroneEntity().getSerialNumber());
-        droneMedicationLoadResponseModel.setResult("SUCCESS");
-        droneMedicationLoadResponseModel.setMessage("Drone loaded successfully");
-        droneMedicationLoadResponseModel.setMedicationModel(toMedicationModel(droneMedicationLoadEntity.getMedicationEntity()));
-
-        return droneMedicationLoadResponseModel;
+        return DroneMedicationLoadResponseModel.builder()
+                .medicationModel(toMedicationModel(droneMedicationLoadEntity.getMedicationEntity()))
+                .serialNumber(droneMedicationLoadEntity.getDroneEntity().getSerialNumber())
+                .result(Constants.SUCCESS)
+                .message(Constants.DRONE_LOADED_SUCCESS)
+                .build();
     }
 
     private static MedicationModel toMedicationModel(MedicationEntity medicationEntity) {
