@@ -17,4 +17,9 @@ docker run -d -p 8080:8080 --name drone-container drone-image:latest
 
 then use the postman collection attached in the project
 
+to access swagger, you need to run the project locally and access these urls:
+
+http://localhost:8080/swagger-ui.html
+http://localhost:8080/v2/api-docs
+
 ```
