@@ -12,27 +12,29 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-	}
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.authorizeRequests()
-		.antMatchers(
-                "/api/**").permitAll()
-				.and()
-				.httpBasic()
-				.and()
-				.sessionManagement()
-				.invalidSessionUrl("/login?invalid-session=true	");
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers(
+                        "/swagger-ui.html", "/v2/api-docs").permitAll()
+                .antMatchers(
+                        "/api/**").permitAll()
+                .and()
+                .httpBasic()
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/login?invalid-session=true	");
+    }
 
-	@Bean
-	public static NoOpPasswordEncoder passwordEncoder() {
-		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-	}
+    @Bean
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    }
 
 }

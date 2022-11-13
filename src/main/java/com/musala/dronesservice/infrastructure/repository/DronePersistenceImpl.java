@@ -4,6 +4,7 @@ import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadRequest
 import com.musala.dronesservice.core.domain.droneload.DroneMedicationLoadResponseModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneModel;
 import com.musala.dronesservice.core.domain.droneregister.DroneRegisterResponseModel;
+import com.musala.dronesservice.core.domain.droneregister.enums.State;
 import com.musala.dronesservice.core.persistence.DronePersistence;
 import com.musala.dronesservice.infrastructure.converter.DroneEntityConverter;
 import com.musala.dronesservice.infrastructure.converter.DroneMedicationLoadEntityConverter;
@@ -42,7 +43,7 @@ public class DronePersistenceImpl implements DronePersistence {
 
         final MedicationEntity medicationEntity = medicationRepository.save(MedicationEntityConverter.toEntity(droneMedicationLoadRequestModel.getMedicationModel()));
 
-        droneRepository.updateDroneStatus("LOADING", droneMedicationLoadRequestModel.getSerialNumber());
+        droneRepository.updateDroneStatus(State.LOADING.name(), droneMedicationLoadRequestModel.getSerialNumber());
 
         droneMedicationLoadEntity.setMedicationEntity(medicationEntity);
 
@@ -67,7 +68,7 @@ public class DronePersistenceImpl implements DronePersistence {
     @Override
     public List<DroneModel> getAvailableDroneForLoading() {
 
-        return droneRepository.findAllByState("IDLE").stream().map(DroneEntityConverter::toDroneResponseModel).collect(Collectors.toList());
+        return droneRepository.findAllByState(State.IDLE.name()).stream().map(DroneEntityConverter::toDroneResponseModel).collect(Collectors.toList());
     }
 
     @Override
